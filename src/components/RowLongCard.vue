@@ -8,20 +8,21 @@
             :key="item.title"
             color="white"
             theme="dark"
-            class="d-flex card"
           >
-            <div>
-              <v-avatar class="ma-3" size="125" rounded="0">
-                <v-img
-                  src="https://cdn.vuetifyjs.com/images/cards/foster.jpg"
-                ></v-img>
-              </v-avatar>
-            </div>
-            <div>
-              <v-card-title class="text-h5"> {{ item.title }} </v-card-title>
+            <RouterLink class="w-100 h-100 d-flex router" :to="item.route">
+              <div>
+                <v-avatar class="ma-3" size="125" rounded="0">
+                  <v-img
+                    src="https://cdn.vuetifyjs.com/images/cards/foster.jpg"
+                  ></v-img>
+                </v-avatar>
+              </div>
+              <div>
+                <v-card-title class="text-h5"> {{ item.title }} </v-card-title>
 
-              <v-card-subtitle>{{ item.subtitle }}</v-card-subtitle>
-            </div>
+                <v-card-subtitle>{{ item.subtitle }}</v-card-subtitle>
+              </div>
+            </RouterLink>
           </v-card>
         </v-col>
       </v-row>
@@ -30,9 +31,12 @@
 </template>
 
 <script setup lang="ts">
+import { RouterLink } from "vue-router";
+
 interface itemProps {
   title: string;
   subtitle: string;
+  route: string;
 }
 const props = defineProps({
   items: {
@@ -44,5 +48,10 @@ const props = defineProps({
 <style lang="scss" scoped>
 .card {
   cursor: pointer;
+}
+
+.router {
+  color: inherit;
+  text-decoration: none;
 }
 </style>
