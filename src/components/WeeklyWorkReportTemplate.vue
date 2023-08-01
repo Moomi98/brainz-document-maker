@@ -6,23 +6,43 @@
   >
     <v-row
       class="flex-grow-0 row-container"
-      v-for="(row, idx) in reportRows"
+      v-for="(row, idx) in reportStore.reports[props.type]"
       :key="idx"
     >
       <v-col>
-        <v-text-field v-model="row.code" label="업무코드"></v-text-field>
+        <v-text-field
+          @update:modelValue="onValueChanged($event, 'code', idx)"
+          v-model="row.code"
+          label="업무코드"
+        ></v-text-field>
       </v-col>
       <v-col>
-        <v-text-field v-model="row.content" label="업무내용"></v-text-field>
+        <v-text-field
+          @update:modelValue="onValueChanged($event, 'content', idx)"
+          v-model="row.content"
+          label="업무내용"
+        ></v-text-field>
       </v-col>
       <v-col>
-        <v-text-field v-model="row.duration" label="기간"></v-text-field>
+        <v-text-field
+          @update:modelValue="onValueChanged($event, 'duration', idx)"
+          v-model="row.duration"
+          label="기간"
+        ></v-text-field>
       </v-col>
       <v-col>
-        <v-text-field v-model="row.etc" label="비고"></v-text-field>
+        <v-text-field
+          @update:modelValue="onValueChanged($event, 'etc', idx)"
+          v-model="row.etc"
+          label="비고"
+        ></v-text-field>
       </v-col>
       <v-col>
-        <v-text-field v-model="row.progress" label="진행률"></v-text-field>
+        <v-text-field
+          @update:modelValue="onValueChanged($event, 'progress', idx)"
+          v-model="row.progress"
+          label="진행률"
+        ></v-text-field>
       </v-col>
       <v-btn
         class="delete-button"
@@ -39,25 +59,24 @@
 </template>
 
 <script setup lang="ts">
-import { workReport } from "@/types/report";
-import { ref } from "vue";
+import useReportStore from "@/stores/reports";
 
-const template: workReport = {
-  code: "E20015",
-  content: "",
-  duration: "",
-  etc: "",
-  progress: 0,
+const props = defineProps({
+  type: { type: String, required: true },
+});
+
+const reportStore = useReportStore();
+
+const onValueChanged = (e: string | number, type: string, index: number) => {
+  reportStore.updateReports(props.type, index, type, e);
 };
 
-const reportRows = ref([{ ...template }]);
-
 const onClickAddRowButton = () => {
-  reportRows.value.push({ ...template });
+  reportStore.addReports(props.type);
 };
 
 const onClickDeleteButton = (index: number) => {
-  reportRows.value.splice(index, 1);
+  reportStore.deleteReports(props.type, index);
 };
 </script>
 <style scoped>
