@@ -7,11 +7,11 @@
     >
       <thead>
         <tr>
-          <th>업무코드</th>
-          <th>업무내용</th>
-          <th>기간</th>
-          <th>비고</th>
-          <th>진행률</th>
+          <th>{{ workReportWords.code }}</th>
+          <th>{{ workReportWords.content }}</th>
+          <th>{{ workReportWords.duration }}</th>
+          <th>{{ workReportWords.etc }}</th>
+          <th>{{ workReportWords.progress }}</th>
         </tr>
       </thead>
       <tbody>
@@ -30,6 +30,7 @@
 
 <script setup lang="ts">
 import useReportStore from "@/stores/reports";
+import { workReportWords } from "@/constants/words";
 
 const reportStore = useReportStore();
 </script>

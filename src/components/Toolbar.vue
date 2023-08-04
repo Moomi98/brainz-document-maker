@@ -3,7 +3,7 @@
     <v-toolbar density="compact">
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
-      <v-toolbar-title>주간 업무 보고</v-toolbar-title>
+      <v-toolbar-title>{{ workReportWords.weeklyWorkReport }}</v-toolbar-title>
 
       <v-spacer></v-spacer>
 
@@ -16,6 +16,7 @@
 </template>
 <script setup lang="ts">
 import TableForClipboard from "@/components/TableForClipboard.vue";
+import { workReportWords } from "@/constants/words";
 
 const onCopyButtonClicked = () => {
   const originalElements = document.getElementsByClassName(
