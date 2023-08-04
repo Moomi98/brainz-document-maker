@@ -4,9 +4,10 @@
     fast-fail
     @submit.prevent
   >
+    <h4 class="text-h4">{{ props.title }}</h4>
     <v-row
       class="flex-grow-0 row-container"
-      v-for="(row, idx) in reportStore.reports[props.type]"
+      v-for="(row, idx) in reportStore.reports[props.type].workReport"
       :key="idx"
     >
       <v-col>
@@ -63,6 +64,7 @@ import useReportStore from "@/stores/reports";
 
 const props = defineProps({
   type: { type: String, required: true },
+  title: { type: String, required: true },
 });
 
 const reportStore = useReportStore();

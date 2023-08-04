@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="">
     <table
       v-for="(reportType, key) in reportStore.reports"
       :key="key"
@@ -15,7 +15,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(report, idx) in reportType" :key="idx">
+        <h4 class="text-h6">{{ reportType.title }}</h4>
+        <tr v-for="(report, idx) in reportType.workReport" :key="idx">
           <td class="td">{{ report.code }}</td>
           <td class="td">{{ report.content }}</td>
           <td class="td">{{ report.duration }}</td>
@@ -43,7 +44,6 @@ const reportStore = useReportStore();
   text-align: center;
   width: 20%;
   font-size: 12px;
-  border: 1px solid black;
-  color: red;
+  border: 1px solid gray;
 }
 </style>

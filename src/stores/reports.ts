@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { WorkReport } from "@/types/report";
+import { WeeklyWorkReport, WorkReport } from "@/types/report";
 import { ref } from "vue";
 
 const useReportStore = defineStore("reports", () => {
@@ -11,9 +11,9 @@ const useReportStore = defineStore("reports", () => {
     progress: 0,
   };
 
-  const reports = ref<Record<string, Array<WorkReport>>>({
-    thisWeek: [{ ...template }],
-    nextWeek: [{ ...template }],
+  const reports = ref<Record<string, WeeklyWorkReport>>({
+    thisWeek: { title: "이번 주 수행 업무", workReport: [{ ...template }] },
+    nextWeek: { title: "다음 주 수행 업무", workReport: [{ ...template }] },
   });
 
   const updateReports = (
@@ -22,15 +22,15 @@ const useReportStore = defineStore("reports", () => {
     rowType: string,
     report: string | number
   ) => {
-    reports.value[reportType][index][rowType] = report;
+    reports.value[reportType].workReport[index][rowType] = report;
   };
 
   const addReports = (reportType: string) => {
-    reports.value[reportType].push({ ...template });
+    reports.value[reportType].workReport.push({ ...template });
   };
 
   const deleteReports = (reportType: string, index: number) => {
-    reports.value[reportType].splice(index, 1);
+    reports.value[reportType].workReport.splice(index, 1);
   };
 
   return { reports, updateReports, addReports, deleteReports };

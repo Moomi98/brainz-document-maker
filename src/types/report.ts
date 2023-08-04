@@ -6,3 +6,8 @@ export interface WorkReport {
   progress: number;
   [key: string]: string | number;
 }
+
+export interface WeeklyWorkReport {
+  title: string;
+  workReport: Array<WorkReport>;
+}
