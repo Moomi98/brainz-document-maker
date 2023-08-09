@@ -11,7 +11,10 @@ import { workReportWords } from "@/constants/words";
 
 import WeeklyWorkReportTemplate from "@/components/WeeklyWorkReportTemplate.vue";
 
-const newFunction = (title: string = "", type: string = "") => {
+const initWeeklyWorkReportTemplate = (
+  title: string = "",
+  type: string = ""
+) => {
   const vuetify = createVuetify({ components, directives });
   const pinia = createTestingPinia({
     initialState: {
@@ -43,7 +46,44 @@ const newFunction = (title: string = "", type: string = "") => {
 
 describe("WeeklyWorkReportTemplate.vue", () => {
   it("mount", () => {
-    const wrapper = newFunction(workReportWords.thisWeekWork, "thisWeek");
+    const wrapper = initWeeklyWorkReportTemplate(
+      workReportWords.thisWeekWork,
+      "thisWeek"
+    );
     expect(wrapper.text()).toContain(workReportWords.thisWeekWork);
+  });
+
+  it("click addWeeklyReportButton", async () => {
+    const wrapper = initWeeklyWorkReportTemplate(
+      workReportWords.thisWeekWork,
+      "thisWeek"
+    );
+    const addButton = wrapper.find(".add-button");
+    await addButton.trigger("click");
+    expect(wrapper.findAll(".row-container")).toHaveLength(2);
+  });
+
+  it("no deleteButton when row is only one line", () => {
+    const wrapper = initWeeklyWorkReportTemplate(
+      workReportWords.thisWeekWork,
+      "thisWeek"
+    );
+    expect(wrapper.findAll(".row-container")).toHaveLength(1);
+    expect(wrapper.find(".delete-button").exists()).toBe(false);
+  });
+
+  it("delete weeklyWorkReport", async () => {
+    const wrapper = initWeeklyWorkReportTemplate(
+      workReportWords.thisWeekWork,
+      "thisWeek"
+    );
+
+    const addButton = wrapper.find(".add-button");
+    await addButton.trigger("click");
+
+    const deleteButton = wrapper.find(".delete-button");
+    await deleteButton.trigger("click");
+
+    expect(wrapper.findAll(".row-container")).toHaveLength(1);
   });
 });

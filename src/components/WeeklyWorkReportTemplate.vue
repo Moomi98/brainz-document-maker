@@ -7,7 +7,7 @@
     <h4 class="text-h4">{{ props.title }}</h4>
     <v-row
       class="flex-grow-0 row-container"
-      v-for="(row, idx) in reportStore.reports[props.type].workReport"
+      v-for="(row, idx) in reports"
       :key="idx"
     >
       <v-col>
@@ -46,6 +46,7 @@
         ></v-text-field>
       </v-col>
       <v-btn
+        v-if="reports.length > 1"
         class="delete-button"
         icon="mdi-delete"
         color="red"
@@ -69,6 +70,7 @@ const props = defineProps({
 });
 
 const reportStore = useReportStore();
+const reports = reportStore.reports[props.type].workReport;
 
 const onValueChanged = (e: string | number, type: string, index: number) => {
   reportStore.updateReports(props.type, index, type, e);
