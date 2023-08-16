@@ -12,35 +12,35 @@
     >
       <v-col>
         <v-text-field
-          @update:modelValue="onValueChanged($event, 'code', idx)"
+          @update:modelValue="updateReports($event, 'code', idx)"
           v-model="row.code"
           :label="workReportWords.code"
         ></v-text-field>
       </v-col>
       <v-col>
         <v-text-field
-          @update:modelValue="onValueChanged($event, 'content', idx)"
+          @update:modelValue="updateReports($event, 'content', idx)"
           v-model="row.content"
           :label="workReportWords.content"
         ></v-text-field>
       </v-col>
       <v-col>
         <v-text-field
-          @update:modelValue="onValueChanged($event, 'duration', idx)"
+          @update:modelValue="updateReports($event, 'duration', idx)"
           v-model="row.duration"
           :label="workReportWords.duration"
         ></v-text-field>
       </v-col>
       <v-col>
         <v-text-field
-          @update:modelValue="onValueChanged($event, 'etc', idx)"
+          @update:modelValue="updateReports($event, 'etc', idx)"
           v-model="row.etc"
           :label="workReportWords.etc"
         ></v-text-field>
       </v-col>
       <v-col>
         <v-text-field
-          @update:modelValue="onValueChanged($event, 'progress', idx)"
+          @update:modelValue="updateReports($event, 'progress', idx)"
           v-model="row.progress"
           :label="workReportWords.progress"
         ></v-text-field>
@@ -54,30 +54,101 @@
       >
       </v-btn>
     </v-row>
-    <v-btn class="add-button" @click="onClickAddRowButton">
-      {{ workReportWords.addWorkReport }}</v-btn
+    <v-row
+      class="flex-grow-0 row-container"
+      v-for="(row, idx) in vacations"
+      :key="idx"
     >
+      <v-col>
+        <v-text-field
+          @update:modelValue="updateVacation($event, 'code', idx)"
+          v-model="row.code"
+          :label="workReportWords.code"
+        ></v-text-field>
+      </v-col>
+      <v-col>
+        <v-text-field
+          @update:modelValue="updateVacation($event, 'content', idx)"
+          v-model="row.content"
+          :label="workReportWords.content"
+        ></v-text-field>
+      </v-col>
+      <v-col>
+        <v-text-field
+          @update:modelValue="updateVacation($event, 'duration', idx)"
+          v-model="row.duration"
+          :label="workReportWords.duration"
+        ></v-text-field>
+      </v-col>
+      <v-col>
+        <v-text-field
+          @update:modelValue="updateVacation($event, 'etc', idx)"
+          v-model="row.etc"
+          :label="workReportWords.etc"
+        ></v-text-field>
+      </v-col>
+      <v-col>
+        <v-text-field
+          @update:modelValue="updateVacation($event, 'progress', idx)"
+          v-model="row.progress"
+          :label="workReportWords.progress"
+        ></v-text-field>
+      </v-col>
+      <v-btn
+        v-if="reports.length > 1"
+        class="delete-button"
+        icon="mdi-delete"
+        color="red"
+        @click="onClickDeleteButton(idx)"
+      >
+      </v-btn>
+    </v-row>
+    <div class="d-flex">
+      <v-btn class="add-button" @click="onClickAddRowButton">
+        {{ workReportWords.addWorkReport }}</v-btn
+      >
+      <v-btn
+        v-if="props.useVacation"
+        class="add-button vacation-button"
+        @click="onClickAddVacationButton"
+      >
+        {{ workReportWords.addVacation }}</v-btn
+      >
+    </div>
   </v-form>
 </template>
 
 <script setup lang="ts">
 import useReportStore from "@/stores/reports";
 import { workReportWords } from "@/constants/words";
+import { ref } from "vue";
 
 const props = defineProps({
   type: { type: String, required: true },
   title: { type: String, required: true },
+  useVacation: { type: Boolean, default: false },
 });
+
+const buttonWidth = ref(props.useVacation ? "50%" : "100%");
 
 const reportStore = useReportStore();
 const reports = reportStore.reports[props.type].workReport;
+const vacations = reportStore.reports[props.type].vacation;
 
-const onValueChanged = (e: string | number, type: string, index: number) => {
+const updateReports = (e: string | number, type: string, index: number) => {
   reportStore.updateReports(props.type, index, type, e);
+};
+
+const updateVacation = (e: string | number, type: string, index: number) => {
+  reportStore.updateVacation(props.type, index, type, e);
 };
 
 const onClickAddRowButton = () => {
   reportStore.addReports(props.type);
+};
+
+const onClickAddVacationButton = () => {
+  reportStore.addVacation(props.type);
 };
 
 const onClickDeleteButton = (index: number) => {
@@ -95,8 +166,8 @@ const onClickDeleteButton = (index: number) => {
   border-radius: 10px;
 }
 
-.add-button {
-  width: 100%;
+.add-button .vacation-button {
+  width: v-bind(buttonWidth);
   min-height: 40px;
 }
 

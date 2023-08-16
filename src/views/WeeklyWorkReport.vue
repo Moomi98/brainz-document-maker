@@ -5,6 +5,7 @@
       <WeeklyWorkReportTemplate
         type="thisWeek"
         :title="workReportWords.thisWeekWork"
+        :useVacation="true"
       />
       <WeeklyWorkReportTemplate
         type="nextWeek"

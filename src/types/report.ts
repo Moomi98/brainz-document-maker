@@ -10,4 +10,5 @@ export interface WorkReport {
 export interface WeeklyWorkReport {
   title: string;
   workReport: Array<WorkReport>;
+  vacation: Array<WorkReport>;
 }

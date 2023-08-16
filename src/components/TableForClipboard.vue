@@ -23,6 +23,13 @@
           <td class="td">{{ report.etc }}</td>
           <td class="td">{{ report.progress }}</td>
         </tr>
+        <tr v-for="(vacation, idx) in reportType.vacation" :key="idx">
+          <td class="td">{{ vacation.code }}</td>
+          <td class="td">{{ vacation.content }}</td>
+          <td class="td">{{ vacation.duration }}</td>
+          <td class="td">{{ vacation.etc }}</td>
+          <td class="td">{{ vacation.progress }}</td>
+        </tr>
       </tbody>
     </table>
   </div>

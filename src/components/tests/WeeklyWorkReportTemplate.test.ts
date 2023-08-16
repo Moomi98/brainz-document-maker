@@ -21,10 +21,12 @@ const initWeeklyWorkReportTemplate = (
       thisWeek: {
         title: workReportWords.thisWeekWork,
         workReport: [{ ...template }],
+        vacation: [],
       },
       nextWeek: {
         title: workReportWords.nextWeekWork,
         workReport: [{ ...template }],
+        vacation: [],
       },
     },
     stubActions: false,
@@ -35,6 +37,7 @@ const initWeeklyWorkReportTemplate = (
     props: {
       title,
       type,
+      useVacation: true,
     },
     global: {
       plugins: [vuetify, pinia],
@@ -85,5 +88,16 @@ describe("WeeklyWorkReportTemplate.vue", () => {
     await deleteButton.trigger("click");
 
     expect(wrapper.findAll(".row-container")).toHaveLength(1);
+  });
+
+  it("add vacation", async () => {
+    const wrapper = initWeeklyWorkReportTemplate(
+      workReportWords.thisWeekWork,
+      "thisWeek"
+    );
+
+    const vacationButton = wrapper.find(".vacation-button");
+    await vacationButton.trigger("click");
+    expect(wrapper.findAll(".row-container")).toHaveLength(2);
   });
 });
