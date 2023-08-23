@@ -103,7 +103,7 @@
       >
       </v-btn>
     </v-row>
-    <div class="d-flex">
+    <div class="d-flex ga-4">
       <v-btn class="add-button" @click="onClickAddRowButton">
         {{ workReportWords.addWorkReport }}</v-btn
       >
@@ -166,7 +166,8 @@ const onClickDeleteButton = (index: number) => {
   border-radius: 10px;
 }
 
-.add-button .vacation-button {
+.add-button,
+.vacation-button {
   width: v-bind(buttonWidth);
   min-height: 40px;
 }
